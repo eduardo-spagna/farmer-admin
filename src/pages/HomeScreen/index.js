@@ -1,9 +1,14 @@
 import React from 'react';
 import Button from '../../components/Button';
+import { logout } from '../../services/user';
 import { Container } from './styles';
 
 const HomeScreen = ({ navigation }) => {
   const { navigate } = navigation;
+
+  const onLogout = async () => {
+    logout();
+  };
 
   return (
     <Container>
@@ -25,6 +30,12 @@ const HomeScreen = ({ navigation }) => {
         text="Gerenciar Financeiro"
         onPress={() => navigate('Finance')}
       ></Button>
+      <Button
+        textColor="white"
+        backgroundColor="#004445"
+        text="Sair"
+        onPress={onLogout}
+      />
     </Container>
   );
 };
