@@ -33,6 +33,12 @@ const HomeScreen = ({ navigation }) => {
       <Button
         textColor="white"
         backgroundColor="#004445"
+        text="Sobre"
+        onPress={() => navigate('about')}
+      />
+      <Button
+        textColor="white"
+        backgroundColor="#004445"
         text="Sair"
         onPress={onLogout}
       />

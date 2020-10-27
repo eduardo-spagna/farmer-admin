@@ -1,18 +1,79 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, Picker, View, TouchableOpacity } from 'react-native';
 
+import { showMessage } from 'react-native-flash-message';
 import { TextInput, RadioButton } from 'react-native-paper';
 import { TextInputMask } from 'react-native-masked-text';
+import { useNavigation } from '@react-navigation/native';
 
 import { ContainerCentered } from '../../styles/components';
+import { createFinance, editFinance } from '../../services/finance';
 import Button from '../../components/Button';
 import { Row, Label } from './styles';
 
-const AddBalanceScreen = () => {
+const AddBalanceScreen = ({ route }) => {
   const [type, setType] = useState('r');
   const [value, setValue] = useState();
   const [isPaid, setIsPaid] = useState('false');
   const [date, setDate] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const { goBack } = useNavigation();
+
+  useEffect(() => {
+    if (route && route.params) {
+      const { data } = route.params.selectedItem;
+      setType(data.type);
+      setValue(data.value);
+      setIsPaid(String(data.isPaid));
+      setDate(data.date);
+    }
+  }, [route]);
+
+  const onCreateBalance = async () => {
+    if (!value) {
+      showMessage({
+        type: 'danger',
+        message: 'Valor é obrigatório',
+      });
+
+      return;
+    }
+
+    setLoading(true);
+    try {
+      if (route.params.selectedItem) {
+        await editFinance({
+          type,
+          value,
+          isPaid,
+          date,
+          id: route.params.selectedItem.id,
+        });
+
+        showMessage({
+          type: 'success',
+          message: 'Lançamento editado com sucesso',
+        });
+      } else {
+        await createFinance({ type, value, isPaid, date });
+
+        showMessage({
+          type: 'success',
+          message: 'Lançamento salva com sucesso',
+        });
+      }
+
+      goBack();
+    } catch (error) {
+      showMessage({
+        type: 'danger',
+        message: 'Não foi possível salvar o lançamento',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <ContainerCentered>
@@ -88,7 +149,8 @@ const AddBalanceScreen = () => {
         textColor="white"
         backgroundColor="#004445"
         text="Salvar"
-        onPress={() => console.log('Botao Salvar Saldos')}
+        onPress={onCreateBalance}
+        loading={loading}
       ></Button>
     </ContainerCentered>
   );

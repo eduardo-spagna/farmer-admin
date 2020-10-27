@@ -13,6 +13,7 @@ import AddProductionScreen from './pages/AddProductionScreen';
 import AddBalanceScreen from './pages/AddBalanceScreen';
 import RegisterScreen from './pages/RegisterScreen';
 import { auth } from './config/firebase';
+import AboutScreen from './pages/AboutScreen';
 
 const Stack = createStackNavigator();
 
@@ -85,7 +86,7 @@ export default function Router() {
             />
             <Stack.Screen
               options={{
-                title: 'Nova Propriedade',
+                title: 'Propriedade',
                 headerStyle: { backgroundColor: '#004445', elevation: 0 },
                 headerTintColor: '#fff',
               }}
@@ -94,7 +95,7 @@ export default function Router() {
             />
             <Stack.Screen
               options={{
-                title: 'Nova Produção',
+                title: 'Produção',
                 headerStyle: { backgroundColor: '#004445', elevation: 0 },
                 headerTintColor: '#fff',
               }}
@@ -103,12 +104,21 @@ export default function Router() {
             />
             <Stack.Screen
               options={{
-                title: 'Novo Lançamento',
+                title: 'Lançamento',
                 headerStyle: { backgroundColor: '#004445', elevation: 0 },
                 headerTintColor: '#fff',
               }}
               name="AddBalance"
               component={AddBalanceScreen}
+            />
+            <Stack.Screen
+              options={{
+                title: 'Sobre',
+                headerStyle: { backgroundColor: '#004445', elevation: 0 },
+                headerTintColor: '#fff',
+              }}
+              name="about"
+              component={AboutScreen}
             />
           </>
         )}

@@ -13,4 +13,6 @@ export const ButtonContainer = styled(TouchableOpacity)`
   border-radius: 6px;
   padding: 15px;
   margin-top: 10px;
+  flex-direction: row;
+  justify-content: center;
 `;
