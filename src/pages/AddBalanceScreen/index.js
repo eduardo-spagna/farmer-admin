@@ -42,7 +42,7 @@ const AddBalanceScreen = ({ route }) => {
 
     setLoading(true);
     try {
-      if (route.params.selectedItem) {
+      if (route.params) {
         await editFinance({
           type,
           value,

@@ -75,7 +75,7 @@ const AddPropertyScreen = ({ route }) => {
 
     setLoading(true);
     try {
-      if (route.params.selectedItem) {
+      if (route.params) {
         await editProperty({
           name,
           acre,
